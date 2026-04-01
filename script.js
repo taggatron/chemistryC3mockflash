@@ -73,6 +73,8 @@ const foundationFlashcards = [
     {
         id: 15,
         question: "Define oxidation and reduction in terms of oxygen and electrons.",
+        answerImage: "oilrigjpg.jpg",
+        answerImageAlt: "Offshore oil rig",
         answer: "Oxidation is gain of oxygen or loss of electrons. Reduction is loss of oxygen or gain of electrons."
     },
     {
@@ -211,7 +213,7 @@ function getTopicFromId(id) {
     if (id >= 17 && id <= 20) return 'Titration and Data';
     if (id >= 21 && id <= 26) return 'Core Reactions and Tests';
     if (id >= 27 && id <= 28) return 'Required Practical';
-    return 'Metal and Water Energy';
+    return 'Bond Energy Changes';
 }
 
 const cardsWithTopics = foundationFlashcards.map((card) => ({
@@ -238,6 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentDeck = [...cardsWithTopics].sort((a, b) => a.id - b.id);
     let currentIndex = 0;
     let isShuffled = false;
+    const cardById = new Map(cardsWithTopics.map((card) => [card.id, card]));
 
     function getAnswerText(card) {
         return strictMode ? (strictAnswers[card.id] || card.answer) : card.answer;
@@ -359,6 +362,26 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCounter();
     }
 
+    function updateStrictModeInPlace() {
+        const renderedCards = document.querySelectorAll('.flashcard');
+        renderedCards.forEach((flashcard) => {
+            const id = Number(flashcard.getAttribute('data-id'));
+            const card = cardById.get(id);
+            if (!card) return;
+
+            const answerText = flashcard.querySelector('.answer-text');
+            if (answerText) {
+                answerText.innerHTML = getAnswerText(card);
+            }
+
+            const strictButton = flashcard.querySelector('.strict-toggle');
+            if (strictButton) {
+                strictButton.classList.toggle('on', strictMode);
+                strictButton.textContent = strictMode ? 'Strict Mark Scheme: On' : 'Switch To Strict Mark Scheme';
+            }
+        });
+    }
+
     function highlightActiveCard() {
         const cards = document.querySelectorAll('.flashcard');
         cards.forEach((card, idx) => {
@@ -442,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target.classList.contains('strict-toggle')) {
             e.stopPropagation();
             strictMode = !strictMode;
-            renderFlashcards();
+            updateStrictModeInPlace();
             return;
         }
 
