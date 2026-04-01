@@ -31,6 +31,50 @@ header p {
     opacity: 0.9;
 }
 
+.controls {
+    max-width: 1400px;
+    margin: 0 auto 18px auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #fff;
+}
+
+.controls label {
+    font-weight: 600;
+}
+
+.controls select,
+.controls button {
+    border: none;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 0.95rem;
+}
+
+.controls select {
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+.controls button {
+    background: #0f172a;
+    color: #fff;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background: #1e293b;
+}
+
+#card-counter {
+    font-weight: 600;
+    min-width: 96px;
+    text-align: center;
+}
+
 .tier-switch {
     margin-top: 12px;
     display: inline-flex;
@@ -120,6 +164,23 @@ header p {
     padding: 0 20px;
 }
 
+.topic-section {
+    margin-bottom: 26px;
+}
+
+.topic-title {
+    max-width: 1400px;
+    margin: 0 auto 10px auto;
+    padding: 0 20px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    letter-spacing: 0.2px;
+}
+
+.topic-grid {
+    margin-bottom: 0;
+}
+
 /* Flashcard Styling */
 .flashcard {
     height: 250px;
@@ -140,6 +201,10 @@ header p {
 
 .flashcard.flipped .card-inner {
     transform: rotateY(180deg);
+}
+
+.flashcard.active .card-inner {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.7), 0 12px 35px rgba(0, 0, 0, 0.25);
 }
 
 .card-front, .card-back {
@@ -236,6 +301,22 @@ header p {
     font-style: italic;
 }
 
+.strict-toggle {
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.strict-toggle.on {
+    background: #fff;
+    color: #0b4fa6;
+}
+
 /* Hover effects */
 .flashcard:hover .card-inner {
     transform: translateY(-5px);
@@ -283,6 +364,16 @@ footer p {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .controls {
+        gap: 8px;
+    }
+
+    .controls select,
+    .controls button {
+        font-size: 0.88rem;
+        padding: 8px 10px;
+    }
+
     .flashcard-container {
         grid-template-columns: 1fr;
         gap: 20px;

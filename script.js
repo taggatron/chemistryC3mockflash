@@ -167,93 +167,298 @@ const foundationFlashcards = [
     }
 ];
 
-// Initialize the flashcard app (foundation-only)
+const strictAnswers = {
+    1: "Mark points: strong acids fully ionise in water; acidity is caused by H+ ions.",
+    2: "Mark points: sodium nitrate + water + carbon dioxide.",
+    3: "Mark points: strong acid 0-2, weak acid 4-6, weak alkali 8-10, strong alkali 12-14.",
+    4: "Mark points: potassium sulfate + water.",
+    5: "Mark points: 6.02 x 10^23 (Avogadro constant).",
+    6: "Mark points: concentration = amount/volume; g/dm^3 = mass/volume; mol/dm^3 = moles/volume.",
+    7: "Mark points: moles = mass/Mr; mass = moles x Mr.",
+    8: "Mark points: Mr(HCl)=36.5; n=50/36.5=1.37 mol.",
+    9: "Mark points: Mr(H2O)=18; mass=2x18=36 g.",
+    10: "Mark points: both have activation energy hump; exothermic products lower than reactants (delta H negative); endothermic products higher (delta H positive).",
+    11: "Mark points: bond breaking takes in energy; bond making releases energy; compare totals to classify reaction.",
+    12: "Mark points: overall energy change = bonds broken - bonds formed.",
+    13: "Mark points: negative overall energy change = exothermic; positive = endothermic.",
+    14: "Mark points: iron + oxygen -> iron oxide.",
+    15: "Mark points: oxidation = gain O or loss e-; reduction = loss O or gain e-.",
+    16: "Mark points: 2Fe + O2 -> 2FeO.",
+    17: "Mark points: measured alkali + indicator in flask; acid in burette to endpoint; repeat to concordant titres; use stoichiometry to calculate concentration.",
+    18: "Mark points: rinse apparatus correctly; eye-level meniscus reading; dropwise near endpoint with swirling; repeat and average concordant titres.",
+    19: "Mark points: range = highest - lowest.",
+    20: "Mark points: universal indicator green at pH 7.",
+    21: "Mark points: hydrochloric HCl; sulfuric H2SO4; nitric HNO3.",
+    22: "Mark points: dilution moves pH toward 7; acids increase in pH, alkalis decrease in pH.",
+    23: "Mark points: acid + alkali -> salt + water. Example: hydrochloric acid + sodium hydroxide -> sodium chloride + water.",
+    24: "Mark points: acid + metal -> salt + hydrogen. Example: magnesium + hydrochloric acid -> magnesium chloride + hydrogen.",
+    25: "Mark points: H2 squeaky pop; CO2 turns limewater milky; O2 relights glowing splint.",
+    26: "Mark points: universal indicator/pH paper; pH probe or meter.",
+    27: "Mark points: warm acid; add excess CuO; filter excess solid; evaporate filtrate; cool to crystallise; filter/dry crystals.",
+    28: "Mark points: titration gives neutralising volume; calculate moles then concentration; higher concentration = stronger solution.",
+    29: "Mark points: exothermic releases energy (products lower); endothermic takes in energy (products higher).",
+    30: "Mark points: overall energy change = sum bonds broken - sum bonds formed.",
+    31: "Mark points: negative = exothermic, positive = endothermic.",
+    32: "Mark points: 2Li + 2H2O -> 2LiOH + H2.",
+    33: "Mark points: break 2 O-H = 872 kJ; form 2 Li-O + H-H = 1084 kJ; delta H = -212 kJ/mol (exothermic)."
+};
+
+function getTopicFromId(id) {
+    if (id >= 1 && id <= 4) return 'Acids and Alkalis';
+    if (id >= 5 && id <= 9) return 'Moles and Calculations';
+    if (id >= 10 && id <= 13) return 'Energy Changes';
+    if (id >= 14 && id <= 16) return 'Oxidation and Equations';
+    if (id >= 17 && id <= 20) return 'Titration and Data';
+    if (id >= 21 && id <= 26) return 'Core Reactions and Tests';
+    if (id >= 27 && id <= 28) return 'Required Practical';
+    return 'Metal and Water Energy';
+}
+
+const cardsWithTopics = foundationFlashcards.map((card) => ({
+    ...card,
+    topic: getTopicFromId(card.id)
+}));
+
+// Initialize the flashcard app
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('flashcard-container');
     const resetButton = document.getElementById('reset-button');
+    const topicFilter = document.getElementById('topic-filter');
+    const shuffleButton = document.getElementById('shuffle-button');
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+    const cardCounter = document.getElementById('card-counter');
 
-    // Create flashcards from a given array
-    function createFlashcards(cardsArray) {
-        container.innerHTML = '';
-
-        cardsArray.forEach(card => {
-            const flashcardElement = document.createElement('div');
-            // Add 'has-diagram' class if EITHER side has an image, making the card taller
-            flashcardElement.className = 'flashcard foundation' + ((card.answerImage || card.image) ? ' has-diagram' : '');
-            flashcardElement.setAttribute('data-id', card.id);
-
-            flashcardElement.innerHTML = `
-                <div class="card-inner">
-                    <div class="card-front">
-                        <div class="question-number">Question ${card.id}</div>
-                        <div class="question-text">${card.question}</div>
-                        ${card.image ? `<img src="${card.image}" alt="${card.imageAlt || 'Flashcard image'}" class="card-front-image">` : ''}
-                        <div class="click-hint">Click to reveal answer</div>
-                    </div>
-                    <div class="card-back">
-                        <div class="answer-label">Answer ${card.id}</div>
-                        ${card.answerImage ? `<img src="${card.answerImage}" alt="${card.answerImageAlt || 'Answer diagram'}" class="card-back-image">` : ''}
-                        <div class="answer-text">${card.answer}</div>
-                        <div class="click-hint">Click to show question</div>
-                    </div>
-                </div>
-            `;
-
-            // Add click handler
-            flashcardElement.addEventListener('click', function(e) {
-                if (e.target.closest('.modal-trigger')) return; // Ignore clicks on buttons
-                this.classList.toggle('flipped');
-            });
-
-            container.appendChild(flashcardElement);
-        });
-    }
-
-    // Reset all cards
-    function resetAllCards() {
-        const allCards = document.querySelectorAll('.flashcard');
-        allCards.forEach(card => {
-            card.classList.remove('flipped');
-        });
-    }
-
-    // Render foundation flashcards only
-    createFlashcards(foundationFlashcards);
-
-    // Reset button functionality
-    resetButton.addEventListener('click', resetAllCards);
-
-    // Modal Logic
     const modalOverlay = document.getElementById('modal-overlay');
     const modalClose = document.getElementById('modal-close');
     const modalIframe = document.getElementById('modal-iframe');
 
-    // Close Modal Function
+    let strictMode = false;
+    let currentTopic = 'all';
+    let currentDeck = [...cardsWithTopics].sort((a, b) => a.id - b.id);
+    let currentIndex = 0;
+    let isShuffled = false;
+
+    function getAnswerText(card) {
+        return strictMode ? (strictAnswers[card.id] || card.answer) : card.answer;
+    }
+
+    function getVisibleCards() {
+        const filtered = currentTopic === 'all'
+            ? [...currentDeck]
+            : currentDeck.filter((card) => card.topic === currentTopic);
+        return filtered;
+    }
+
+    function updateCounter() {
+        const visibleCards = getVisibleCards();
+        const total = visibleCards.length;
+        if (total === 0) {
+            cardCounter.textContent = 'Card 0 of 0';
+            return;
+        }
+        const position = Math.min(currentIndex + 1, total);
+        cardCounter.textContent = `Card ${position} of ${total}`;
+    }
+
+    function buildCardElement(card, orderIndex) {
+        const flashcardElement = document.createElement('div');
+        flashcardElement.className = 'flashcard foundation' + ((card.answerImage || card.image) ? ' has-diagram' : '');
+        flashcardElement.setAttribute('data-id', String(card.id));
+        flashcardElement.setAttribute('data-order', String(orderIndex));
+
+        flashcardElement.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="question-number">Question ${card.id}</div>
+                    <div class="question-text">${card.question}</div>
+                    ${card.image ? `<img src="${card.image}" alt="${card.imageAlt || 'Flashcard image'}" class="card-front-image">` : ''}
+                    <div class="click-hint">${card.topic}</div>
+                </div>
+                <div class="card-back">
+                    <div class="answer-label">Answer ${card.id}</div>
+                    ${card.answerImage ? `<img src="${card.answerImage}" alt="${card.answerImageAlt || 'Answer diagram'}" class="card-back-image">` : ''}
+                    <div class="answer-text">${getAnswerText(card)}</div>
+                    <button type="button" class="strict-toggle ${strictMode ? 'on' : ''}">
+                        ${strictMode ? 'Strict Mark Scheme: On' : 'Switch To Strict Mark Scheme'}
+                    </button>
+                    <div class="click-hint">Click card to show question</div>
+                </div>
+            </div>
+        `;
+
+        flashcardElement.addEventListener('click', function(e) {
+            if (e.target.closest('button') || e.target.closest('.modal-trigger')) return;
+            this.classList.toggle('flipped');
+            const newIndex = Number(this.getAttribute('data-order'));
+            if (!Number.isNaN(newIndex)) {
+                currentIndex = newIndex;
+                highlightActiveCard();
+                updateCounter();
+            }
+        });
+
+        return flashcardElement;
+    }
+
+    function renderByTopic(cardsArray) {
+        container.innerHTML = '';
+        const grouped = new Map();
+
+        cardsArray.forEach((card) => {
+            if (!grouped.has(card.topic)) {
+                grouped.set(card.topic, []);
+            }
+            grouped.get(card.topic).push(card);
+        });
+
+        let orderIndex = 0;
+        grouped.forEach((cards, topic) => {
+            const section = document.createElement('section');
+            section.className = 'topic-section';
+
+            const title = document.createElement('h2');
+            title.className = 'topic-title';
+            title.textContent = topic;
+
+            const grid = document.createElement('div');
+            grid.className = 'flashcard-container topic-grid';
+
+            cards.forEach((card) => {
+                grid.appendChild(buildCardElement(card, orderIndex));
+                orderIndex += 1;
+            });
+
+            section.appendChild(title);
+            section.appendChild(grid);
+            container.appendChild(section);
+        });
+    }
+
+    function renderFlat(cardsArray) {
+        container.innerHTML = '';
+        cardsArray.forEach((card, orderIndex) => {
+            container.appendChild(buildCardElement(card, orderIndex));
+        });
+    }
+
+    function renderFlashcards() {
+        const visibleCards = getVisibleCards();
+        if (currentIndex >= visibleCards.length) {
+            currentIndex = Math.max(visibleCards.length - 1, 0);
+        }
+
+        const shouldGroupByTopic = currentTopic === 'all' && !isShuffled;
+        if (shouldGroupByTopic) {
+            renderByTopic(visibleCards);
+        } else {
+            renderFlat(visibleCards);
+        }
+
+        highlightActiveCard();
+        updateCounter();
+    }
+
+    function highlightActiveCard() {
+        const cards = document.querySelectorAll('.flashcard');
+        cards.forEach((card, idx) => {
+            if (idx === currentIndex) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+    }
+
+    function navigate(direction) {
+        const visibleCards = getVisibleCards();
+        if (visibleCards.length === 0) return;
+
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = visibleCards.length - 1;
+        if (currentIndex >= visibleCards.length) currentIndex = 0;
+
+        highlightActiveCard();
+        updateCounter();
+
+        const activeCard = document.querySelector(`.flashcard[data-order="${currentIndex}"]`);
+        if (activeCard) {
+            activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function resetAllCards() {
+        const allCards = document.querySelectorAll('.flashcard');
+        allCards.forEach((card) => {
+            card.classList.remove('flipped');
+        });
+    }
+
+    function shuffleDeck() {
+        const shuffled = [...currentDeck];
+        for (let i = shuffled.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        currentDeck = shuffled;
+        isShuffled = true;
+        currentIndex = 0;
+        renderFlashcards();
+    }
+
+    function populateTopics() {
+        const topics = [...new Set(cardsWithTopics.map((card) => card.topic))];
+        topics.forEach((topic) => {
+            const option = document.createElement('option');
+            option.value = topic;
+            option.textContent = topic;
+            topicFilter.appendChild(option);
+        });
+    }
+
     function closeModal() {
         modalOverlay.classList.remove('active');
         setTimeout(() => {
             modalOverlay.style.display = 'none';
-            modalIframe.src = ''; // Stop video/content
-        }, 300); // Match transition logic
+            modalIframe.src = '';
+        }, 300);
     }
 
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) closeModal();
+    populateTopics();
+    renderFlashcards();
+
+    resetButton.addEventListener('click', resetAllCards);
+    shuffleButton.addEventListener('click', shuffleDeck);
+    prevButton.addEventListener('click', () => navigate(-1));
+    nextButton.addEventListener('click', () => navigate(1));
+
+    topicFilter.addEventListener('change', function() {
+        currentTopic = this.value;
+        currentIndex = 0;
+        renderFlashcards();
     });
 
-    // Delegated listener for modal triggers (buttons inside dynamic cards)
     document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('strict-toggle')) {
+            e.stopPropagation();
+            strictMode = !strictMode;
+            renderFlashcards();
+            return;
+        }
+
         if (e.target.classList.contains('modal-trigger')) {
-            e.stopPropagation(); // Prevent card flip
+            e.stopPropagation();
             const url = e.target.getAttribute('data-url');
             if (url) {
                 modalIframe.src = url;
                 modalOverlay.style.display = 'flex';
-                // Trigger reflow for transition
                 setTimeout(() => modalOverlay.classList.add('active'), 10);
             }
         }
     });
 
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+    });
 });
