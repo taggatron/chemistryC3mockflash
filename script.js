@@ -3,7 +3,7 @@ const foundationFlashcards = [
     {
         id: 1,
         question: "Define strong acids. (Which ion is responsible for acidity)",
-        answer: "A strong acid fully ionises in water. Acidity is due to hydrogen ions, H+ (or hydronium ions, H3O+)."
+        answer: "A strong acid fully ionises in water. Acidity is due to hydrogen ions, H<sup>+</sup> (or hydronium ions, H<sub>3</sub>O<sup>+</sup>)."
     },
     {
         id: 2,
@@ -42,8 +42,8 @@ const foundationFlashcards = [
     },
     {
         id: 9,
-        question: "What is the mass of 2 moles of H2O?",
-        answer: "Mr(H2O) = (2 x 1) + 16 = 18. Mass = moles x Mr = 2 x 18 = 36 g."
+        question: "What is the mass of 2 moles of H<sub>2</sub>O?",
+        answer: "Mr(H<sub>2</sub>O) = (2 x 1) + 16 = 18. Mass = moles x Mr = 2 x 18 = 36 g."
     },
     {
         id: 10,
@@ -79,8 +79,8 @@ const foundationFlashcards = [
     },
     {
         id: 16,
-        question: "State the balanced symbol reaction between iron, Fe, and oxygen, O2, to form iron oxide, FeO.",
-        answer: "2Fe + O2 -> 2FeO"
+        question: "State the balanced symbol reaction between iron, Fe, and oxygen, O<sub>2</sub>, to form iron oxide, FeO.",
+        answer: "2Fe + O<sub>2</sub> -> 2FeO"
     },
     {
         id: 17,
@@ -105,7 +105,7 @@ const foundationFlashcards = [
     {
         id: 21,
         question: "What are the names, and chemical symbols, of the three acids you need to know.",
-        answer: "Hydrochloric acid (HCl), sulfuric acid (H2SO4), nitric acid (HNO3)."
+        answer: "Hydrochloric acid (HCl), sulfuric acid (H<sub>2</sub>SO<sub>4</sub>), nitric acid (HNO<sub>3</sub>)."
     },
     {
         id: 22,
@@ -124,8 +124,8 @@ const foundationFlashcards = [
     },
     {
         id: 25,
-        question: "What are the tests for the following gases: hydrogen, carbon dioxide, oxygen?",
-        answer: "Hydrogen: lit splint gives a squeaky pop. Carbon dioxide: turns limewater milky/cloudy. Oxygen: relights a glowing splint."
+        question: "What are the tests for the following gases: hydrogen (H<sub>2</sub>), carbon dioxide (CO<sub>2</sub>), oxygen (O<sub>2</sub>)?",
+        answer: "Hydrogen (H<sub>2</sub>): lit splint gives a squeaky pop. Carbon dioxide (CO<sub>2</sub>): turns limewater milky/cloudy. Oxygen (O<sub>2</sub>): relights a glowing splint."
     },
     {
         id: 26,
@@ -159,18 +159,18 @@ const foundationFlashcards = [
     },
     {
         id: 32,
-        question: "Lithium and water react to form hydrogen, H2, and lithium hydroxide, LiOH. State the balanced symbol equation for this reaction.",
-        answer: "2Li + 2H2O -> 2LiOH + H2"
+        question: "Lithium and water react to form hydrogen, H<sub>2</sub>, and lithium hydroxide, LiOH. State the balanced symbol equation for this reaction.",
+        answer: "2Li + 2H<sub>2</sub>O -> 2LiOH + H<sub>2</sub>"
     },
     {
         id: 33,
         question: "Calculate the overall energy change for the reaction between lithium and water. Use O-H = 436 kJ/mol, H-H = 464 kJ/mol, Li-O = 310 kJ/mol.",
-        answer: "Using 2Li + 2H2O -> 2LiOH + H2: break 2 O-H bonds = 2 x 436 = 872 kJ. Form 2 Li-O and 1 H-H = (2 x 310) + 464 = 1084 kJ. Overall energy change = 872 - 1084 = -212 kJ/mol, so exothermic."
+        answer: "Using 2Li + 2H<sub>2</sub>O -> 2LiOH + H<sub>2</sub>: break 2 O-H bonds = 2 x 436 = 872 kJ. Form 2 Li-O and 1 H-H = (2 x 310) + 464 = 1084 kJ. Overall energy change = 872 - 1084 = -212 kJ/mol, so exothermic."
     }
 ];
 
 const strictAnswers = {
-    1: "Mark points: strong acids fully ionise in water; acidity is caused by H+ ions.",
+    1: "Mark points: strong acids fully ionise in water; acidity is caused by H<sup>+</sup> ions.",
     2: "Mark points: sodium nitrate + water + carbon dioxide.",
     3: "Mark points: strong acid 0-2, weak acid 4-6, weak alkali 8-10, strong alkali 12-14.",
     4: "Mark points: potassium sulfate + water.",
@@ -178,30 +178,30 @@ const strictAnswers = {
     6: "Mark points: concentration = amount/volume; g/dm^3 = mass/volume; mol/dm^3 = moles/volume.",
     7: "Mark points: moles = mass/Mr; mass = moles x Mr.",
     8: "Mark points: Mr(HCl)=36.5; n=50/36.5=1.37 mol.",
-    9: "Mark points: Mr(H2O)=18; mass=2x18=36 g.",
+    9: "Mark points: Mr(H<sub>2</sub>O)=18; mass=2x18=36 g.",
     10: "Mark points: both have activation energy hump; exothermic products lower than reactants (delta H negative); endothermic products higher (delta H positive).",
     11: "Mark points: bond breaking takes in energy; bond making releases energy; compare totals to classify reaction.",
     12: "Mark points: overall energy change = bonds broken - bonds formed.",
     13: "Mark points: negative overall energy change = exothermic; positive = endothermic.",
     14: "Mark points: iron + oxygen -> iron oxide.",
     15: "Mark points: oxidation = gain O or loss e-; reduction = loss O or gain e-.",
-    16: "Mark points: 2Fe + O2 -> 2FeO.",
+    16: "Mark points: 2Fe + O<sub>2</sub> -> 2FeO.",
     17: "Mark points: measured alkali + indicator in flask; acid in burette to endpoint; repeat to concordant titres; use stoichiometry to calculate concentration.",
     18: "Mark points: rinse apparatus correctly; eye-level meniscus reading; dropwise near endpoint with swirling; repeat and average concordant titres.",
     19: "Mark points: range = highest - lowest.",
     20: "Mark points: universal indicator green at pH 7.",
-    21: "Mark points: hydrochloric HCl; sulfuric H2SO4; nitric HNO3.",
+    21: "Mark points: hydrochloric HCl; sulfuric H<sub>2</sub>SO<sub>4</sub>; nitric HNO<sub>3</sub>.",
     22: "Mark points: dilution moves pH toward 7; acids increase in pH, alkalis decrease in pH.",
     23: "Mark points: acid + alkali -> salt + water. Example: hydrochloric acid + sodium hydroxide -> sodium chloride + water.",
     24: "Mark points: acid + metal -> salt + hydrogen. Example: magnesium + hydrochloric acid -> magnesium chloride + hydrogen.",
-    25: "Mark points: H2 squeaky pop; CO2 turns limewater milky; O2 relights glowing splint.",
+    25: "Mark points: H<sub>2</sub> squeaky pop; CO<sub>2</sub> turns limewater milky; O<sub>2</sub> relights glowing splint.",
     26: "Mark points: universal indicator/pH paper; pH probe or meter.",
     27: "Mark points: warm acid; add excess CuO; filter excess solid; evaporate filtrate; cool to crystallise; filter/dry crystals.",
     28: "Mark points: titration gives neutralising volume; calculate moles then concentration; higher concentration = stronger solution.",
     29: "Mark points: exothermic releases energy (products lower); endothermic takes in energy (products higher).",
     30: "Mark points: overall energy change = sum bonds broken - sum bonds formed.",
     31: "Mark points: negative = exothermic, positive = endothermic.",
-    32: "Mark points: 2Li + 2H2O -> 2LiOH + H2.",
+    32: "Mark points: 2Li + 2H<sub>2</sub>O -> 2LiOH + H<sub>2</sub>.",
     33: "Mark points: break 2 O-H = 872 kJ; form 2 Li-O + H-H = 1084 kJ; delta H = -212 kJ/mol (exothermic)."
 };
 
