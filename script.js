@@ -221,6 +221,28 @@ const cardsWithTopics = foundationFlashcards.map((card) => ({
     topic: getTopicFromId(card.id)
 }));
 
+function formatChemNotation(text) {
+    if (!text) return text;
+
+    const replacements = [
+        ['H3O+', 'H<sub>3</sub>O<sup>+</sup>'],
+        ['H2SO4', 'H<sub>2</sub>SO<sub>4</sub>'],
+        ['HNO3', 'HNO<sub>3</sub>'],
+        ['H2O', 'H<sub>2</sub>O'],
+        ['CO2', 'CO<sub>2</sub>'],
+        ['O2', 'O<sub>2</sub>'],
+        ['H2', 'H<sub>2</sub>'],
+        ['H+', 'H<sup>+</sup>']
+    ];
+
+    let formatted = text;
+    replacements.forEach(([plain, rich]) => {
+        formatted = formatted.replaceAll(plain, rich);
+    });
+
+    return formatted;
+}
+
 // Initialize the flashcard app
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('flashcard-container');
@@ -243,7 +265,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const cardById = new Map(cardsWithTopics.map((card) => [card.id, card]));
 
     function getAnswerText(card) {
-        return strictMode ? (strictAnswers[card.id] || card.answer) : card.answer;
+        const rawAnswer = strictMode ? (strictAnswers[card.id] || card.answer) : card.answer;
+        return formatChemNotation(rawAnswer);
     }
 
     function getVisibleCards() {
@@ -274,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card-inner">
                 <div class="card-front">
                     <div class="question-number">Question ${card.id}</div>
-                    <div class="question-text">${card.question}</div>
+                    <div class="question-text">${formatChemNotation(card.question)}</div>
                     ${card.image ? `<img src="${card.image}" alt="${card.imageAlt || 'Flashcard image'}" class="card-front-image">` : ''}
                     <div class="click-hint">${card.topic}</div>
                 </div>
